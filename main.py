@@ -4,6 +4,7 @@ import pandas as pd
 from pandas import json_normalize
 from datetime import date, datetime, timedelta
 
+# key can be obtained from https://darksky.net/dev
 key = '6015f7479c39552c4dbac4583b4bfa7e'
 output_df = pd.DataFrame()
 sdate = date(2017, 12, 10)
@@ -26,7 +27,6 @@ for i, dt in enumerate(dts):
           '?exclude=currently,flags'
     response = requests.get(url)
     parsed = json.loads(response.content)
-    daily_parsed = parsed['daily']['data'][0]
     df = json_normalize(parsed['daily']['data'][0])
     df['time'] = pd.to_datetime(df['time'],unit='s')
     output_df = output_df.append(df)
